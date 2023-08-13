@@ -22,7 +22,7 @@ class HBNBCommand(cmd.Cmd):
             "all": self.do_all,
             "show": self.do_show,
             "destroy": self.do_destroy,
-            # "count": self.do_count,
+            "count": self.count,
             "update": self.do_update
         }
         dotted = re.search(r"\.", arg)
@@ -36,6 +36,15 @@ class HBNBCommand(cmd.Cmd):
                     return argdict[args[0]](call)
         print("*** Unknown syntax: {}".format(arg))
         return False
+
+    def count(self, arg):
+        """internal counting logic to count instances of certain class"""
+        arg = arg.strip(", ")
+        count = 0
+        for instance in storage.all().values():
+            if arg == instance.__class__.__name__:
+                count += 1
+        return count
 
     @staticmethod
     def parser(line):  # pre command processing
