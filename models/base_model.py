@@ -12,7 +12,6 @@ class BaseModel:
         """Initialize a new BaseModel.
 
         Args:
-            *args (any): Unused.
             **kwargs (dict): Key/value pairs of attributes.
         """
         self.id = str(uuid4())
