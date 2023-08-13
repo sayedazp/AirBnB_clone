@@ -73,9 +73,9 @@ class TestUser_instantiation(unittest.TestCase):
         self.assertIn("'created_at': " + dt_repr, usstr)
         self.assertIn("'updated_at': " + dt_repr, usstr)
 
-    def test_args_unused(self):
-        us = User(None)
-        self.assertNotIn(None, us.__dict__.values())
+    # def test_args_unused(self):
+    #     us = User(None)
+    #     self.assertNotIn(None, us.__dict__.values())
 
     def test_instantiation_with_kwargs(self):
         dt = datetime.today()

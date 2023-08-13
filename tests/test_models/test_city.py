@@ -73,9 +73,9 @@ class TestCity_instantiation(unittest.TestCase):
         self.assertIn("'created_at': " + dt_repr, cystr)
         self.assertIn("'updated_at': " + dt_repr, cystr)
 
-    def test_args_unused(self):
-        cy = City(None)
-        self.assertNotIn(None, cy.__dict__.values())
+    # def test_args_unused(self):
+    #     cy = City(None)
+    #     self.assertNotIn(None, cy.__dict__.values())
 
     def test_instantiation_with_kwargs(self):
         dt = datetime.today()

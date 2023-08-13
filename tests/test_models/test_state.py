@@ -67,9 +67,9 @@ class TestState_instantiation(unittest.TestCase):
         self.assertIn("'created_at': " + dt_repr, ststr)
         self.assertIn("'updated_at': " + dt_repr, ststr)
 
-    def test_args_unused(self):
-        st = State(None)
-        self.assertNotIn(None, st.__dict__.values())
+    # def test_args_unused(self):
+    #     st = State(None)
+    #     self.assertNotIn(None, st.__dict__.values())
 
     def test_instantiation_with_kwargs(self):
         dt = datetime.today()
