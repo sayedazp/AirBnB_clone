@@ -1,34 +1,9 @@
 #!/usr/bin/python3
-"""Defines the HBnB console."""
+"""define console class and entry point of the project"""
 import cmd
-import re
 from shlex import split
 from models import storage
-from models.base_model import BaseModel
 from models.user import User
-from models.state import State
-from models.city import City
-from models.place import Place
-from models.amenity import Amenity
-from models.review import Review
-
-
-def parse(arg):
-    curly_braces = re.search(r"\{(.*?)\}", arg)
-    brackets = re.search(r"\[(.*?)\]", arg)
-    if curly_braces is None:
-        if brackets is None:
-            return [i.strip(",") for i in split(arg)]
-        else:
-            lexer = split(arg[:brackets.span()[0]])
-            retl = [i.strip(",") for i in lexer]
-            retl.append(brackets.group())
-            return retl
-    else:
-        lexer = split(arg[:curly_braces.span()[0]])
-        retl = [i.strip(",") for i in lexer]
-        retl.append(curly_braces.group())
-        return retl
 
 
 class HBNBCommand(cmd.Cmd):
@@ -38,54 +13,24 @@ class HBNBCommand(cmd.Cmd):
         prompt (str): The command prompt.
     """
 
-    prompt = "(hbnb) "
-    __classes = {
-        "BaseModel",
-        "User",
-        "State",
-        "City",
-        "Place",
-        "Amenity",
-        "Review"
-    }
+    prompt = '(hbnb)'
 
     @staticmethod
     def parser(line):  # pre command processing
         return [i.strip(",") for i in split(line)]
 
-    def emptyline(self):
-        """Do nothing upon receiving an empty line."""
-        pass
-
-    def default(self, arg):
-        """Default behavior for cmd module when input is invalid"""
-        argdict = {
-            "all": self.do_all,
-            "show": self.do_show,
-            "destroy": self.do_destroy,
-            "count": self.do_count,
-            "update": self.do_update
-        }
-        match = re.search(r"\.", arg)
-        if match is not None:
-            argl = [arg[:match.span()[0]], arg[match.span()[1]:]]
-            match = re.search(r"\((.*?)\)", argl[1])
-            if match is not None:
-                command = [argl[1][:match.span()[0]], match.group()[1:-1]]
-                if command[0] in argdict.keys():
-                    call = "{} {}".format(argl[0], command[1])
-                    return argdict[command[0]](call)
-        print("*** Unknown syntax: {}".format(arg))
-        return False
-
-    def do_quit(self, arg):
+    def do_quit(self, line):
         """Quit command to exit the program."""
         return True
 
-    def do_EOF(self, arg):
-        """EOF signal to exit the program."""
+    def do_EOF(self, line):
+        """End of file ctrl+d signal"""
         print("")
         return True
+
+    def emptyline(self):
+        """overriding the original emptyline function"""
+        pass
 
     def do_create(self, line):
         """Usage:$ create BaseModel.
@@ -154,16 +99,6 @@ class HBNBCommand(cmd.Cmd):
                     objects.append(obj.__str__())
             print(objects)
 
-    def do_count(self, arg):
-        """Usage: count <class> or <class>.count()
-        Retrieve the number of instances of a given class."""
-        argl = parse(arg)
-        count = 0
-        for obj in storage.all().values():
-            if argl[0] == obj.__class__.__name__:
-                count += 1
-        print(count)
-
     def do_update(self, line):
         """Usage:$ update BaseModel 1234-1234-1234 email "aibnb@mail.com"
         Updates an instance based on the class name and id by \
@@ -172,23 +107,23 @@ class HBNBCommand(cmd.Cmd):
 
         if len(args) == 0:
             print("** class name missing **")
-            return
+            return False
         if args[0] not in storage.classes.keys():
             print("** class doesn't exist **")
-            return
+            return False
         if len(args) == 1:
             print("** instance id missing **")
-            return
+            return False
         dicObjRepre = storage.all()
         if "{}.{}".format(args[0], args[1]) not in dicObjRepre.keys():
             print("** no instance found **")
-            return
+            return False
         if len(args) == 2:
             print("** attribute name missing **")
-            return
+            return False
         if len(args) == 3 and not isinstance(eval(args[2]), dict):
             print("** value missing **")
-            return
+            return False
         if len(args) == 4:
             obj = dicObjRepre["{}.{}".format(args[0], args[1])]
             if args[2] in obj.__class__.__dict__.keys():
@@ -199,5 +134,5 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     HBNBCommand().cmdloop()
