@@ -44,7 +44,7 @@ class HBNBCommand(cmd.Cmd):
         for instance in storage.all().values():
             if arg == instance.__class__.__name__:
                 count += 1
-        return count
+        print(count)
 
     @staticmethod
     def parser(line):  # pre command processing
