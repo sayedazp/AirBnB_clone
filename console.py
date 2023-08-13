@@ -128,7 +128,6 @@ class HBNBCommand(cmd.Cmd):
             except NameError:
                 print("** value missing **")
                 return False
-
         if len(args) == 4:
             obj = dicObjRepre["{}.{}".format(args[0], args[1])]
             if args[2] in obj.__class__.__dict__.keys():
