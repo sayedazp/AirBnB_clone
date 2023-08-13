@@ -6,6 +6,7 @@ from models import storage
 from models.user import User
 import re
 
+
 class HBNBCommand(cmd.Cmd):
     """Defines the HolbertonBnB command interpreter.
 
@@ -129,38 +130,53 @@ class HBNBCommand(cmd.Cmd):
                     objl.append(obj.__str__())
             print(objl)
 
-    def do_update(self, line):
-        """Usage:$ update BaseModel 1234-1234-1234 email "aibnb@mail.com"
-        Updates an instance based on the class name and id by \
-        adding or updating attribute"""
-        args = self.parser(line)
+    def do_update(self, arg):
+        """Usage: update <class> <id> <attribute_name> <attribute_value> or
+       <class>.update(<id>, <attribute_name>, <attribute_value>) or
+       <class>.update(<id>, <dictionary>)
+        Update a class instance of a given id by adding or updating
+        a given attribute key/value pair or dictionary."""
+        argl = self.parse(arg)
+        objdict = storage.all()
 
-        if len(args) == 0:
+        if len(argl) == 0:
             print("** class name missing **")
-            return
-        if args[0] not in storage.classes.keys():
+            return False
+        if argl[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
-            return
-        if len(args) == 1:
+            return False
+        if len(argl) == 1:
             print("** instance id missing **")
-            return
-        dicObjRepre = storage.all()
-        if "{}.{}".format(args[0], args[1]) not in dicObjRepre.keys():
+            return False
+        if "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
             print("** no instance found **")
-            return
-        if len(args) == 2:
+            return False
+        if len(argl) == 2:
             print("** attribute name missing **")
-            return
-        if len(args) == 3 and not isinstance(eval(args[2]), dict):
-            print("** value missing **")
-            return
-        if len(args) == 4:
-            obj = dicObjRepre["{}.{}".format(args[0], args[1])]
-            if args[2] in obj.__class__.__dict__.keys():
-                valtype = type(obj.__class__.__dict__[args[2]])
-                obj.__dict__[args[2]] = valtype(args[3])
+            return False
+        if len(argl) == 3:
+            try:
+                type(eval(argl[2])) != dict
+            except NameError:
+                print("** value missing **")
+                return False
+
+        if len(argl) == 4:
+            obj = objdict["{}.{}".format(argl[0], argl[1])]
+            if argl[2] in obj.__class__.__dict__.keys():
+                valtype = type(obj.__class__.__dict__[argl[2]])
+                obj.__dict__[argl[2]] = valtype(argl[3])
             else:
-                obj.__dict__[args[2]] = args[3]
+                obj.__dict__[argl[2]] = argl[3]
+        elif type(eval(argl[2])) == dict:
+            obj = objdict["{}.{}".format(argl[0], argl[1])]
+            for k, v in eval(argl[2]).items():
+                if (k in obj.__class__.__dict__.keys() and
+                        type(obj.__class__.__dict__[k]) in {str, int, float}):
+                    valtype = type(obj.__class__.__dict__[k])
+                    obj.__dict__[k] = valtype(v)
+                else:
+                    obj.__dict__[k] = v
         storage.save()
 
 
