@@ -49,6 +49,10 @@ class HBNBCommand(cmd.Cmd):
         "Review"
     }
 
+    @staticmethod
+    def parser(line):  # pre command processing
+        return [i.strip(",") for i in split(line)]
+
     def emptyline(self):
         """Do nothing upon receiving an empty line."""
         pass
@@ -83,17 +87,17 @@ class HBNBCommand(cmd.Cmd):
         print("")
         return True
 
-    def do_create(self, arg):
-        """Usage: create <class>
-        Create a new class instance and print its id.
-        """
-        argl = parse(arg)
-        if len(argl) == 0:
+    def do_create(self, line):
+        """Usage:$ create BaseModel.
+        Creates a new instance of BaseModel,\
+        saves it (to the JSON file) and prints the id"""
+        args = self.parser(line)
+        if len(args) == 0:
             print("** class name missing **")
-        elif argl[0] not in HBNBCommand.__classes:
+        elif args[0] not in storage.classes.keys():
             print("** class doesn't exist **")
         else:
-            print(eval(argl[0])().id)
+            print(storage.classes[args[0]]().id)
             storage.save()
 
     def do_show(self, arg):
