@@ -4,6 +4,7 @@ import cmd
 from shlex import split
 from models import storage
 from models.user import User
+import re
 
 
 class HBNBCommand(cmd.Cmd):
@@ -14,6 +15,27 @@ class HBNBCommand(cmd.Cmd):
     """
 
     prompt = '(hbnb)'
+
+    def default(self, arg):
+        """defines what should happen when input in different form"""
+        argdict = {
+            "all": self.do_all,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            # "count": self.do_count,
+            "update": self.do_update
+        }
+        dotted = re.search(r"\.", arg)
+        if dotted is not None:
+            parsed = [arg[:dotted.span()[0]], arg[dotted.span()[1]:]]
+            parenth = re.search(r"\((.*?)\)", parsed[1])
+            if dotted is not None:
+                args = [parsed[1][:parenth.span()[0]], parenth.group()[1:-1]]
+                if args[0] in argdict.keys():
+                    call = "{} {}".format(parsed[0], args[1])
+                    return argdict[args[0]](call)
+        print("*** Unknown syntax: {}".format(arg))
+        return False
 
     @staticmethod
     def parser(line):  # pre command processing
