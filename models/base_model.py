@@ -53,13 +53,3 @@ class BaseModel:
         """Return the print/str representation of the BaseModel instance."""
         clname = self.__class__.__name__
         return "[{}] ({}) {}".format(clname, self.id, self.__dict__)
-
-# if __name__ == "__main__":
-#     new = BaseModel()
-#     print(new.to_dict())
-#     dic = new.to_dict()
-#     dic["__class__"] = 'lol'
-#     new2 = BaseModel(**dic)
-#     print(new2.to_dict())
-#     print(new.updated_at == new2.updated_at)
-#     type(storage)

@@ -7,6 +7,11 @@ from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
+    """Defines the HolbertonBnB command interpreter.
+
+    Attributes:
+        prompt (str): The command prompt.
+    """
 
     prompt = '(hbnb)'
 
