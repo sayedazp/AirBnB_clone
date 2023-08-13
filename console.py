@@ -25,7 +25,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, line):
         """End of file ctrl+d signal"""
-        print("")
         return True
 
     def emptyline(self):
