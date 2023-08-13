@@ -121,9 +121,13 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 2:
             print("** attribute name missing **")
             return False
-        if len(args) == 3 and not isinstance(eval(args[2]), dict):
-            print("** value missing **")
-            return False
+        if len(args) == 3:
+            try:
+                type(eval(args[2])) != dict
+            except NameError:
+                print("** value missing **")
+                return False
+
         if len(args) == 4:
             obj = dicObjRepre["{}.{}".format(args[0], args[1])]
             if args[2] in obj.__class__.__dict__.keys():
