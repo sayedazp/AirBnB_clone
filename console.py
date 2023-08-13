@@ -14,6 +14,15 @@ class HBNBCommand(cmd.Cmd):
     """
 
     prompt = '(hbnb)'
+    __classes = {
+        "BaseModel",
+        "User",
+        "State",
+        "City",
+        "Place",
+        "Amenity",
+        "Review"
+    }
 
     @staticmethod
     def parser(line):  # pre command processing
