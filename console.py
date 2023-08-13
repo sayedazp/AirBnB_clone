@@ -49,7 +49,14 @@ class HBNBCommand(cmd.Cmd):
     @staticmethod
     def parser(line):  # pre command processing
         """Parser to parse the input to out the input vars"""
-        return [i.strip(",") for i in split(line)]
+        curl_brackets = re.search(r"\{(.*?)\}", line)
+        if curl_brackets is None:
+            return [i.strip(",") for i in split(line)]
+        else:
+            bef_brack = split(line[:curl_brackets.span()[0]])
+            step = [i.strip(',') for i in bef_brack]
+            step.append(curl_brackets.group())
+            return step
 
     def do_quit(self, line):
         """Quit command to exit the program."""
@@ -155,7 +162,15 @@ class HBNBCommand(cmd.Cmd):
             return False
         if len(args) == 3:
             try:
-                type(eval(args[2])) != dict
+                if type(eval(args[2])) == dict:
+                    evalu = dict(eval(args[2]))
+                    obj = dicObjRepre["{}.{}".format(args[0], args[1])]
+                    for k, v in evalu.items():
+                        if k in obj.__class__.__dict__.keys():
+                            valtype = type(obj.__class__.__dict__[k])
+                            obj.__dict__[k] = valtype(v)
+                        else:
+                            obj.__dict__[k] = v
             except NameError:
                 print("** value missing **")
                 return False
@@ -166,6 +181,7 @@ class HBNBCommand(cmd.Cmd):
                 obj.__dict__[args[2]] = valtype(args[3])
             else:
                 obj.__dict__[args[2]] = args[3]
+        # elif type(eval(args[2])) == dict:
         storage.save()
 
 
