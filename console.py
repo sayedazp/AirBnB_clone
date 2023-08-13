@@ -17,6 +17,7 @@ class HBNBCommand(cmd.Cmd):
 
     @staticmethod
     def parser(line):  # pre command processing
+        """Parser to parse the input to out the input vars"""
         return [i.strip(",") for i in split(line)]
 
     def do_quit(self, line):
