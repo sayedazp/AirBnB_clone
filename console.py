@@ -4,7 +4,7 @@ import cmd
 from shlex import split
 from models import storage
 from models.user import User
-
+import re
 
 class HBNBCommand(cmd.Cmd):
     """Defines the HolbertonBnB command interpreter.
