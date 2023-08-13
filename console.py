@@ -100,22 +100,24 @@ class HBNBCommand(cmd.Cmd):
             print(storage.classes[args[0]]().id)
             storage.save()
 
-    def do_show(self, arg):
-        """Usage: show <class> <id> or <class>.show(<id>)
-        Display the string representation of a class instance of a given id.
+    def do_show(self, line):
+        """Usage:$ show BaseModel 1234-1234-1234.
+        Prints the string representation of an instance \
+        based on the class name and id.
         """
-        argl = parse(arg)
-        objdict = storage.all()
-        if len(argl) == 0:
+        args = self.parser(line)
+        if len(args) == 0:
             print("** class name missing **")
-        elif argl[0] not in HBNBCommand.__classes:
+        elif args[0] not in storage.classes.keys():
             print("** class doesn't exist **")
-        elif len(argl) == 1:
+        elif len(args) == 1:
             print("** instance id missing **")
-        elif "{}.{}".format(argl[0], argl[1]) not in objdict:
-            print("** no instance found **")
         else:
-            print(objdict["{}.{}".format(argl[0], argl[1])])
+            dicObjRepre = storage.all()
+            if "{}.{}".format(args[0], args[1]) not in dicObjRepre:
+                print("** no instance found **")
+            else:
+                print(dicObjRepre["{}.{}".format(args[0], args[1])])
 
     def do_destroy(self, arg):
         """Usage: destroy <class> <id> or <class>.destroy(<id>)
