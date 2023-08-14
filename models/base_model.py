@@ -23,7 +23,7 @@ class BaseModel:
                     pass
                 if k == "created_at" or k == "updated_at":
                     self.__dict__[k] = datetime.fromisoformat(v)
-                elif(k == '__class__'):
+                elif (k == '__class__'):
                     pass
                 else:
                     self.__dict__[k] = v
