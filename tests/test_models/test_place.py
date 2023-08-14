@@ -2,9 +2,9 @@
 """Defines unittests for models/place.py.
 
 Unittest classes:
+    TestPlace_to_dict
     TestPlace_instantiation
     TestPlace_save
-    TestPlace_to_dict
 """
 import os
 import models
@@ -29,9 +29,9 @@ class TestPlace_to_dict(unittest.TestCase):
 
     def test_to_dict_contains_added_attributes(self):
         my_placemodel = Place()
-        my_placemodel.middle_name = "Holberton"
-        my_placemodel.my_number = 98
-        self.assertEqual("Holberton", my_placemodel.middle_name)
+        my_placemodel.middle_name = "ahmed"
+        my_placemodel.my_number = 88
+        self.assertEqual("ahmed", my_placemodel.middle_name)
         self.assertIn("my_number", my_placemodel.to_dict())
 
     def test_to_dict_datetime_attributes_are_strs(self):

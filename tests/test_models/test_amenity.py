@@ -2,9 +2,9 @@
 """Defines unittests for models/amenity.py.
 
 Unittest classes:
+    TestAmenity_to_dict for test
+    TestAmenity_save for test
     TestAmenity_instantiation
-    TestAmenity_save
-    TestAmenity_to_dict
 """
 import os
 import models
@@ -15,7 +15,7 @@ from models.amenity import Amenity
 
 
 class TestAmenity_to_dict(unittest.TestCase):
-    """Unittests for testing to_dict method of the Amenity class."""
+    """Unittests for testing to_dict of the Amenity class."""
 
     def test_to_dict_type(self):
         self.assertTrue(dict, type(Amenity().to_dict()))
@@ -29,9 +29,9 @@ class TestAmenity_to_dict(unittest.TestCase):
 
     def test_to_dict_contains_added_attributes(self):
         my_amenitymodel = Amenity()
-        my_amenitymodel.middle_name = "Holberton"
-        my_amenitymodel.my_number = 98
-        self.assertEqual("Holberton", my_amenitymodel.middle_name)
+        my_amenitymodel.middle_name = "ahmed"
+        my_amenitymodel.my_number = 2
+        self.assertEqual("ahmed", my_amenitymodel.middle_name)
         self.assertIn("my_number", my_amenitymodel.to_dict())
 
     def test_to_dict_datetime_attributes_are_strs(self):

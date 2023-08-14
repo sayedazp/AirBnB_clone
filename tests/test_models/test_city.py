@@ -29,9 +29,9 @@ class TestCity_to_dict(unittest.TestCase):
 
     def test_to_dict_contains_added_attributes(self):
         my_citymodel = City()
-        my_citymodel.middle_name = "Holberton"
-        my_citymodel.my_number = 98
-        self.assertEqual("Holberton", my_citymodel.middle_name)
+        my_citymodel.middle_name = "ahmed"
+        my_citymodel.my_number = 96
+        self.assertEqual("ahmed", my_citymodel.middle_name)
         self.assertIn("my_number", my_citymodel.to_dict())
 
     def test_to_dict_datetime_attributes_are_strs(self):

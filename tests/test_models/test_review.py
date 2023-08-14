@@ -2,9 +2,9 @@
 """Defines unittests for models/review.py.
 
 Unittest classes:
+    TestReview_to_dict
     TestReview_instantiation
     TestReview_save
-    TestReview_to_dict
 """
 import os
 import models
@@ -29,9 +29,9 @@ class TestReview_to_dict(unittest.TestCase):
 
     def test_to_dict_contains_added_attributes(self):
         my_reviewmodel = Review()
-        my_reviewmodel.middle_name = "Holberton"
-        my_reviewmodel.my_number = 98
-        self.assertEqual("Holberton", my_reviewmodel.middle_name)
+        my_reviewmodel.middle_name = "sayed"
+        my_reviewmodel.my_number = 14
+        self.assertEqual("sayed", my_reviewmodel.middle_name)
         self.assertIn("my_number", my_reviewmodel.to_dict())
 
     def test_to_dict_datetime_attributes_are_strs(self):

@@ -2,9 +2,9 @@
 """Defines unittests for models/base_model.py.
 
 Unittest classes:
-    TestBaseModel_instantiation
     TestBaseModel_save
     TestBaseModel_to_dict
+     TestBaseModel_instantiation
 """
 import os
 import models
@@ -30,8 +30,8 @@ class TestBaseModel_to_dict(unittest.TestCase):
 
     def test_to_dict_contains_added_attributes(self):
         my_basemodel = BaseModel()
-        my_basemodel.name = "Holberton"
-        my_basemodel.my_number = 98
+        my_basemodel.name = "my_name"
+        my_basemodel.my_number = 78
         self.assertIn("name", my_basemodel.to_dict())
         self.assertIn("my_number", my_basemodel.to_dict())
 

@@ -29,9 +29,9 @@ class TestUser_to_dict(unittest.TestCase):
 
     def test_to_dict_contains_added_attributes(self):
         my_usermodel = User()
-        my_usermodel.middle_name = "Holberton"
-        my_usermodel.my_number = 98
-        self.assertEqual("Holberton", my_usermodel.middle_name)
+        my_usermodel.middle_name = "sayed"
+        my_usermodel.my_number = 44
+        self.assertEqual("sayed", my_usermodel.middle_name)
         self.assertIn("my_number", my_usermodel.to_dict())
 
     def test_to_dict_datetime_attributes_are_strs(self):

@@ -29,9 +29,9 @@ class TestState_to_dict(unittest.TestCase):
 
     def test_to_dict_contains_added_attributes(self):
         my_statemodel = State()
-        my_statemodel.middle_name = "Holberton"
-        my_statemodel.my_number = 98
-        self.assertEqual("Holberton", my_statemodel.middle_name)
+        my_statemodel.middle_name = "sayed"
+        my_statemodel.my_number = 65
+        self.assertEqual("sayed", my_statemodel.middle_name)
         self.assertIn("my_number", my_statemodel.to_dict())
 
     def test_to_dict_datetime_attributes_are_strs(self):
